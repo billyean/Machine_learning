@@ -18,15 +18,6 @@ for iter = 1:num_iters
     %
 
     cm = (X * theta - y) .* X;
-    
-    %temp = zeros(length(theta), 1);
-    
-    %for tI = 1:length(theta)
-    %  temp(tI,1) = theta(tI) - alpha * sum(cm(:,tI)) / m;
-    %end
-    
-    
-    %theta = temp;
     theta = theta - alpha * (sum(cm))' / m;
 
     % ============================================================
