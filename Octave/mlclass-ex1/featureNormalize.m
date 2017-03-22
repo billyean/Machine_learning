@@ -25,20 +25,24 @@ sigma = zeros(1, size(X, 2));
 %
 % Hint: You might find the 'mean' and 'std' functions useful.
 %       
-
+row = size(X)(1)
 mu = mean(X);
+mu_x = repmat(mu, [row, 1]);
 sigma = std(X);
+sigma_x = repmat(sigmat, [row, 1]);
 
 
-temp = zeros(size(X));
+%temp = zeros(size(X));
 
-for row = 1:length(X);
-  for col = 1:size(X)(2);
-    temp(row, col) = (X(row, col) - mu(1, col)) / sigma(1, col);
-  end
-end
+%for row = 1:length(X);
+%  for col = 1:size(X)(2);
+%    temp(row, col) = (X(row, col) - mu(1, col)) / sigma(1, col);
+%  end
+%end
 
-X_norm = temp;
+%X_norm = temp;
+
+X_norm = (X(row, col) - mu_x) ./ sigma_x
 
 % ============================================================
 
