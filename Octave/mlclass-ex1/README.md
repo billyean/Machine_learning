@@ -1,4 +1,4 @@
-# Linear Regression*
+# Linear Regression
 
 implement linear regression and get to see it work on data.
 
