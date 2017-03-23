@@ -8,17 +8,17 @@ Submitted by: **Tristan Yan**
 
 The following **required** functionality is complete:
 
-* [X] warmUpExercise.m - Simple example function in Octave/MATLAB 
-* [X] plotData.m - Function to display the dataset
-* [X] computeCost.m - Function to compute the cost of linear regression
-* [X] gradientDescent.m - Function to run gradient descent
+* [X] [warmUpExercise.m](./warmUpExercise.m) - Simple example function in Octave/MATLAB 
+* [X] [plotData.m](plotData.m) - Function to display the dataset
+* [X] [computeCost.m](computeCost.m) - Function to compute the cost of linear regression
+* [X] [gradientDescent.m](gradientDescent.m) - Function to run gradient descent
 
 The following **optional** features are implemented:
 
-* [X] computeCostMulti.m - Cost function for multiple variables
-* [X] gradientDescentMulti.m - Gradient descent for multiple variables 
-* [X] featureNormalize.m - Function to normalize features
-* [X] normalEqn.m - Function to compute the normal equations
+* [X] [computeCostMulti.m](computeCostMulti.m) - Cost function for multiple variables
+* [X] [gradientDescentMulti.m](gradientDescentMulti.m) - Gradient descent for multiple variables 
+* [X] [featureNormalize.m](featureNormalize.m) - Function to normalize features
+* [X] [normalEqn.m](normalEqn.m) - Function to compute the normal equations
 
 ## Video Walkthrough 
 
