@@ -2,5 +2,7 @@
 */project
 */target
 **/.DS_Store
+**/.Rhistory
+**/.RData
 **/.ipynb_checkpoints
 .Rproj.user
