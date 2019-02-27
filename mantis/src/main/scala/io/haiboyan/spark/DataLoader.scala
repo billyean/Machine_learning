@@ -2,26 +2,23 @@ package io.haiboyan.spark
 
 import io.haiboyan.spark.model.Message
 import io.haiboyan.spark.utils.Normalizer
+import org.apache.spark.SparkConf
 import org.apache.spark.ml.feature.Word2Vec
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 class DataLoader(spark: SparkSession) {
-//  val spark = SparkSession
-//    .builder()
-//    .appName("Spark DataLoader")
-//    .getOrCreate()
-
   def load() = {
     val df_sql = spark.read
       .format("jdbc")
       .option("url", "jdbc:mysql://localhost/forum")
       .option("dbtable", "b_messages")
-      .option("user", "")
-      .option("password", "")
+      .option("user", "billyean")
+      .option("password", "guiying")
       .load
 
     val cleanedDf = Normalizer.tokenizeAndStopWords(df_sql, spark)
     val topAuthors = getTopAuthorsFromNumberOfPosts(cleanedDf, 1)
+    
     val model = new Word2Vec().fit(df_sql)
   }
 
@@ -38,4 +35,16 @@ class DataLoader(spark: SparkSession) {
       .filter(_.words.nonEmpty)
       .toDF()
   }
+}
+
+object DataLoader extends App {
+  val conf = new SparkConf()
+  conf.setMaster("local")
+
+  val spark = SparkSession
+    .builder().config(conf)
+    .appName("Spark DataLoader")
+    .getOrCreate()
+
+  new DataLoader(spark).load
 }
