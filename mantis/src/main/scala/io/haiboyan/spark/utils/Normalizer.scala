@@ -3,7 +3,7 @@ package io.haiboyan.spark.utils
 import io.haiboyan.spark.model.Message
 import org.apache.spark.ml.feature.{StopWordsRemover, Tokenizer}
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.{DataFrame, SQLContext, SparkSession}
+import org.apache.spark.sql.{DataFrame, Dataset, SQLContext, SparkSession}
 
 import scala.annotation.tailrec
 
@@ -40,21 +40,29 @@ object Normalizer {
     stopWordsRemover.setStopWords(StopWords.allStopWords)
 
     val withoutStopWords = stopWordsRemover.transform(words)
-
-    import spark.implicits._
-    cleanForumSpecific(withoutStopWords).toDF()
+    cleanForumSpecific(withoutStopWords, spark).toDF
   }
 
 
-  def cleanForumSpecific(withoutStopWords: DataFrame): RDD[Message] = {
-    withoutStopWords.rdd
-      .map(row => Message(row.getAs[Seq[String]]("without-stop-word"), row.getAs[String]("author"),
-        row.getAs[Long]("datestamp"), row.getAs[Long]("message_id"), row.getAs[String]("subject")))
+  def cleanForumSpecific(withoutStopWords: DataFrame, spark: SparkSession): Dataset[Message] = {
+    import spark.implicits._
+    withoutStopWords.map(row => Message(row.getAs[Seq[String]]("without-stop-word"), row.getAs[String]("author"),
+      row.getAs[Long]("datestamp"), row.getAs[Long]("message_id"), row.getAs[String]("subject")))
       .filter(m => m.words.nonEmpty)
       .filter(m => !m.author.equalsIgnoreCase("Anonymous user"))
       .map(r => Message(clearWords(r.words).filter(_.length > 2),
         r.author, toMillis(r), r.messageId, r.subject)
       )
+
+
+//    withoutStopWords.rdd
+//      .map(row => Message(row.getAs[Seq[String]]("without-stop-word"), row.getAs[String]("author"),
+//        row.getAs[Long]("datestamp"), row.getAs[Long]("message_id"), row.getAs[String]("subject")))
+//      .filter(m => m.words.nonEmpty)
+//      .filter(m => !m.author.equalsIgnoreCase("Anonymous user"))
+//      .map(r => Message(clearWords(r.words).filter(_.length > 2),
+//        r.author, toMillis(r), r.messageId, r.subject)
+//      )
   }
 
   def toMillis(r: Message): Long = r.createdTimestamp * 1000
