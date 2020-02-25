@@ -6,7 +6,7 @@ print(f"{files}\n")
 words14841 = reuters.words(['test/14841'])
 print(f"# of words in 14841 is {len(words14841)}, contents is {words14841}\n")
 
-print(f"First 40 words are {words14841[:65]}\n")
+print(f"First 65 words are {words14841[:65]}\n")
 
 reutersGenes = reuters.categories()
 print(f"All categories in reuters are {reutersGenes}\n")
