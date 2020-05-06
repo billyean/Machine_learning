@@ -1,5 +1,8 @@
 name := "mantis"
 
+val sparkVersion = "2.4.5"
+val breezeVersion = "1.0"
+
 lazy val root = (project in file(".")).settings(
   resolvers ++= Seq(
     "Typesafe" at "http://repo.typesafe.com/typesafe/releases/",
@@ -17,22 +20,24 @@ lazy val root = (project in file(".")).settings(
     "-Xlog-reflective-calls",
     "-Xlint"),
   javacOptions in Compile ++= Seq(
-    "-source", "1.8",
-    "-target", "1.8",
+    "-source", "11",
+    "-target", "11",
     "-Xlint:unchecked",
     "-Xlint:deprecation"),
-  scalaVersion := "2.11.12",
+  scalaVersion := "2.12.10",
   libraryDependencies ++= Seq(
-    "org.scalatest" %% "scalatest" % "3.0.5" % "test",
-    "org.scalamock" %% "scalamock-scalatest-support" % "3.2.1" % "test",
-    "org.apache.spark" %% "spark-core" % "2.4.0",
-    "org.apache.spark" %% "spark-sql" % "2.4.0",
-    "org.apache.spark" %% "spark-mllib" % "2.4.0",
+    "org.scalatest" %% "scalatest" % "3.1.1" % "test",
+    "org.scalamock" %% "scalamock-scalatest-support" % "3.6.0" % "test",
+    "org.scalanlp" %% "breeze" % breezeVersion,
+    "org.scalanlp" %% "breeze-natives" % breezeVersion,
+    "org.scalanlp" %% "breeze-viz" % breezeVersion,
+    "org.apache.spark" %% "spark-core" % sparkVersion,
+    "org.apache.spark" %% "spark-sql" % sparkVersion,
+    "org.apache.spark" %% "spark-mllib" % sparkVersion,
     "mysql" % "mysql-connector-java" % "8.0.15",
     "com.typesafe" % "config" % "1.3.3",
     "commons-logging" % "commons-logging" % "1.2",
-    "edu.stanford.nlp" % "stanford-corenlp" % "3.9.2",
-    "edu.stanford.nlp" % "stanford-corenlp" % "3.9.2" artifacts (Artifact("stanford-corenlp", "models"), Artifact("stanford-corenlp")),
+    "edu.stanford.nlp" % "stanford-corenlp" % "4.0.0",
     "edu.stanford.nlp" % "stanford-parser" % "3.9.2"
   ),
 
